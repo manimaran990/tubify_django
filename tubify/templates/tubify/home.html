@@ -1,0 +1,38 @@
+{% include 'tubify/base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block body %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form class="form-inline" action="{% url 'search_tube' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group mx-sm-3 mb-2">
+                    <input class="form-control" type="text" id="search_query" name="search_query"
+                        placeholder="search tube" required>
+                </div>
+                <button class="btn btn-primary mb-2">search</button>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <ul class="list-group">
+        {% for item in info_list %}
+        <li class="list-group-item">
+            {{ item.v_title }}<br>
+            <img src="{{ item.v_thumb }}" alt="{{ item.v_title }}"><br>
+            {{ item.v_views }}
+            <form action="{% url 'get_music' item.v_url_suffix %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-secondary">Drop to dbx</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
